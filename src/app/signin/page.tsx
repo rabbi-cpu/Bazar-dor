@@ -5,7 +5,6 @@ import { useState } from "react";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-base-200 px-4 py-10">
       

@@ -1,14 +1,33 @@
 "use client";
+
 import { useState } from "react";
+import type { FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function SignupPage() {
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setError("");
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedName || !trimmedEmail || !password || !confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
@@ -16,12 +35,36 @@ export default function SignupPage() {
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match!");
+      setError("Passwords do not match.");
       return;
     }
 
-    setError("");
-    alert("Password matched successfully!");
+    setLoading(true);
+
+    try {
+      const result = await authClient.signUp.email({
+        name: trimmedName,
+        email: trimmedEmail,
+        password,
+        callbackURL: "/",
+      });
+
+      if (result.error) {
+        setError(
+          result.error.message || "Signup failed. Please try again."
+        );
+        return;
+      }
+
+      // Signup successful
+      router.replace("/");
+      router.refresh();
+    } catch (err) {
+      console.error("Signup error:", err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -32,6 +75,7 @@ export default function SignupPage() {
   return (
     <main className="flex min-h-[75vh] items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-gray-200/60 sm:p-8">
+        {/* Heading */}
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
           Create Account
         </h1>
@@ -40,8 +84,9 @@ export default function SignupPage() {
           Create your BazarDor account to get started.
         </p>
 
-        {/* Form */}
-        <form onSubmit={handleSignup} className="space-y-5">
+        {/* Signup Form */}
+        <form onSubmit={handleSignup} className="mt-6 space-y-5">
+          {/* Full Name */}
           <div className="space-y-2">
             <label htmlFor="name" className={labelClass}>
               Full Name
@@ -54,10 +99,16 @@ export default function SignupPage() {
               placeholder="Enter your full name"
               autoComplete="name"
               required
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                setError("");
+              }}
               className={inputClass}
             />
           </div>
 
+          {/* Email */}
           <div className="space-y-2">
             <label htmlFor="email" className={labelClass}>
               Email Address
@@ -70,10 +121,16 @@ export default function SignupPage() {
               placeholder="Enter your email address"
               autoComplete="email"
               required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError("");
+              }}
               className={inputClass}
             />
           </div>
 
+          {/* Password */}
           <div className="space-y-2">
             <label htmlFor="password" className={labelClass}>
               Password
@@ -96,6 +153,7 @@ export default function SignupPage() {
             />
           </div>
 
+          {/* Confirm Password */}
           <div className="space-y-2">
             <label htmlFor="confirmPassword" className={labelClass}>
               Confirm Password
@@ -118,6 +176,7 @@ export default function SignupPage() {
             />
           </div>
 
+          {/* Error Message */}
           {error && (
             <p
               role="alert"
@@ -127,19 +186,21 @@ export default function SignupPage() {
             </p>
           )}
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full rounded-xl bg-green-600 py-3.5 font-semibold text-white shadow-md shadow-green-600/20 transition hover:bg-green-700 active:scale-[0.99]"
+            disabled={loading}
+            className="w-full rounded-xl bg-green-600 py-3.5 font-semibold text-white shadow-md shadow-green-600/20 transition hover:bg-green-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Create Account
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
-        {/* Login */}
+        {/* Signin Link */}
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link
-            href="/login"
+            href="/signin"
             className="font-semibold text-green-700 hover:text-green-800 hover:underline"
           >
             Sign In

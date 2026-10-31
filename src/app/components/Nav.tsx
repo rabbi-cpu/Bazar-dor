@@ -1,6 +1,6 @@
-
 import Image from "next/image";
 import image from "@/app/assets/logo-icon.png";
+import Link from "next/link";
 
 const Nav = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -20,9 +20,7 @@ const Nav = () => {
           />
 
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">
-              বাজার দর
-            </h1>
+            <h1 className="text-xl md:text-2xl font-bold">বাজার দর</h1>
 
             <p className="hidden md:block text-sm text-base-content/70">
               {date}
@@ -32,13 +30,15 @@ const Nav = () => {
       </div>
 
       <div className="flex gap-2">
-        <button className="btn btn-sm sm:btn-md">
-          Signin
-        </button>
+        <Link href="/signin">
+          <button className="btn btn-sm sm:btn-md">Signin</button>
+        </Link>
 
-        <button className="btn bg-green-600 text-white border-green-600 hover:bg-green-700 btn-sm sm:btn-md">
-          Signup
-        </button>
+        <Link href="/signup">
+          <button className="btn bg-green-600 text-white border-green-600 hover:bg-green-700 btn-sm sm:btn-md">
+            Signup
+          </button>
+        </Link>
       </div>
     </div>
   );

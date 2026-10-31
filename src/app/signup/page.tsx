@@ -1,6 +1,4 @@
-
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 
@@ -34,20 +32,13 @@ export default function SignupPage() {
   return (
     <main className="flex min-h-[75vh] items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-gray-200/60 sm:p-8">
-        {/* Logo */}
-        <div className="mb-7 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-green-200 bg-green-50 text-3xl shadow-sm">
-            🛒
-          </div>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+          Create Account
+        </h1>
 
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Create Account
-          </h1>
-
-          <p className="mt-2 text-sm text-gray-500">
-            Create your BazarDor account to get started.
-          </p>
-        </div>
+        <p className="mt-2 text-sm text-gray-500">
+          Create your BazarDor account to get started.
+        </p>
 
         {/* Form */}
         <form onSubmit={handleSignup} className="space-y-5">

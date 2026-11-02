@@ -20,7 +20,6 @@ function SignInForm() {
   const [socialLoading, setSocialLoading] = useState("");
   const [error, setError] = useState("");
 
-  // Email and Password Sign In
   const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -47,8 +46,6 @@ function SignInForm() {
       setLoading(false);
     }
   };
-
-  // Google and GitHub Sign In
   const handleSocialSignIn = async (
     provider: "google" | "github"
   ) => {

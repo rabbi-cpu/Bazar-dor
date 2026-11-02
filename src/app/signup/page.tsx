@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -5,6 +6,8 @@ import type { FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -13,9 +16,12 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState("");
 
+  // Email and Password Signup
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -24,7 +30,12 @@ export default function SignupPage() {
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
 
-    if (!trimmedName || !trimmedEmail || !password || !confirmPassword) {
+    if (
+      !trimmedName ||
+      !trimmedEmail ||
+      !password ||
+      !confirmPassword
+    ) {
       setError("Please fill in all fields.");
       return;
     }
@@ -56,14 +67,33 @@ export default function SignupPage() {
         return;
       }
 
-      // Signup successful
-      router.replace("/");
+      router.push("/");
       router.refresh();
     } catch (err) {
       console.error("Signup error:", err);
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Google and GitHub Signup
+  const handleSocialSignup = async (
+    provider: "google" | "github"
+  ) => {
+    setError("");
+    setSocialLoading(provider);
+
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+    } catch (err) {
+      console.error(`${provider} signup error:`, err);
+
+      setError("Social signup failed. Please try again.");
+      setSocialLoading("");
     }
   };
 
@@ -75,17 +105,25 @@ export default function SignupPage() {
   return (
     <main className="flex min-h-[75vh] items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-gray-200/60 sm:p-8">
-        {/* Heading */}
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-          Create Account
-        </h1>
 
-        <p className="mt-2 text-sm text-gray-500">
-          Create your BazarDor account to get started.
-        </p>
+        {/* Heading */}
+        <div className="mb-6 text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100 text-4xl">
+            🛒
+          </div>
+
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900">
+            Create Account
+          </h1>
+
+          <p className="mt-2 text-sm text-gray-500">
+            Create your BazarDor account to get started.
+          </p>
+        </div>
 
         {/* Signup Form */}
-        <form onSubmit={handleSignup} className="mt-6 space-y-5">
+        <form onSubmit={handleSignup} className="space-y-5">
+
           {/* Full Name */}
           <div className="space-y-2">
             <label htmlFor="name" className={labelClass}>
@@ -155,7 +193,10 @@ export default function SignupPage() {
 
           {/* Confirm Password */}
           <div className="space-y-2">
-            <label htmlFor="confirmPassword" className={labelClass}>
+            <label
+              htmlFor="confirmPassword"
+              className={labelClass}
+            >
               Confirm Password
             </label>
 
@@ -189,12 +230,55 @@ export default function SignupPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !!socialLoading}
             className="w-full rounded-xl bg-green-600 py-3.5 font-semibold text-white shadow-md shadow-green-600/20 transition hover:bg-green-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
+
+        {/* Divider */}
+        <div className="my-6 flex items-center gap-3">
+          <div className="h-px flex-1 bg-gray-200" />
+
+          <span className="text-xs text-gray-400">
+            OR CONTINUE WITH
+          </span>
+
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+
+        {/* Google and GitHub Signup */}
+        <div className="flex gap-3">
+
+          {/* Google */}
+          <button
+            type="button"
+            disabled={loading || !!socialLoading}
+            onClick={() => handleSocialSignup("google")}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white py-3 font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <FcGoogle className="text-xl" />
+
+            {socialLoading === "google"
+              ? "Connecting..."
+              : "Google"}
+          </button>
+
+          {/* GitHub */}
+          <button
+            type="button"
+            disabled={loading || !!socialLoading}
+            onClick={() => handleSocialSignup("github")}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white py-3 font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <FaGithub className="text-xl" />
+
+            {socialLoading === "github"
+              ? "Connecting..."
+              : "GitHub"}
+          </button>
+        </div>
 
         {/* Signin Link */}
         <p className="mt-6 text-center text-sm text-gray-600">

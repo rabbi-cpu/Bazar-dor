@@ -1,5 +1,7 @@
+import { headers } from "next/headers";
+import { redirect, notFound } from "next/navigation";
 
-import { notFound } from "next/navigation";
+import { auth } from "@/lib/Auth";
 import ProductDetails from "@/app/components/ProductDetails";
 import type { Product } from "@/app/components/ProductCard";
 
@@ -38,6 +40,18 @@ async function getProducts(): Promise<Product[]> {
 
 export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
+
+  // Check logged-in user
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // Login না থাকলে Sign In page-এ পাঠাবে
+  if (!session) {
+    redirect(`/signin?callbackURL=${encodeURIComponent(`/product/${id}`)}`);
+  }
+
+  // User login করা থাকলে product data আনবে
   const products = await getProducts();
 
   const product = products.find(

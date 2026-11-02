@@ -1,6 +1,3 @@
-
-import Categories from "./components/All-Categories";
-import Mar from "./components/Mar";
 import Banner from "./components/Banner";
 import Products from "./components/Products";
 
@@ -14,11 +11,10 @@ export default async function Home({ searchParams }: HomeProps) {
   const { category } = await searchParams;
 
   return (
-    <div>
-      <Categories activeSlug={category} />
-      <Mar />
-      <Banner />
+    <>
+      {!category && <Banner />}
+
       <Products categorySlug={category} />
-    </div>
+    </>
   );
 }

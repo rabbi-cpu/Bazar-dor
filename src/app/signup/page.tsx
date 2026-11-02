@@ -120,16 +120,11 @@ export default function SignupPage() {
             Create your BazarDor account to get started.
           </p>
         </div>
-
-        {/* Signup Form */}
         <form onSubmit={handleSignup} className="space-y-5">
-
-          {/* Full Name */}
           <div className="space-y-2">
             <label htmlFor="name" className={labelClass}>
               Full Name
             </label>
-
             <input
               id="name"
               name="name"
@@ -145,8 +140,6 @@ export default function SignupPage() {
               className={inputClass}
             />
           </div>
-
-          {/* Email */}
           <div className="space-y-2">
             <label htmlFor="email" className={labelClass}>
               Email Address

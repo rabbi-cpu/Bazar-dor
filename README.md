@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+✨ Features
+- Product Price Overview: Explore essential product prices.
+- Product Categories: Browse products by categories such as rice and other daily essentials.
+- Product Details: View detailed information about each product.
+- Market-wise Price Comparison: Compare minimum and maximum prices from different markets.
+- Price Trend Information: See price changes compared with previous periods.
+- Responsive Design: Works on mobile, tablet, and desktop screens.
+- User Authentication: Sign up and sign in using email and password.
+- Google & GitHub Login: Support for social authentication.
+- Profile Management: View and update user profile information.
+- Toast Notifications: Get feedback for successful actions and errors.
+- Bangla Interface: Designed for a familiar experience for Bangladeshi users.
+🛠️ Technologies Used
+Technology	Purpose
+Next.js	React framework and routing
+React	Building user interfaces
+TypeScript	Type-safe development
+Tailwind CSS	Styling and responsive layouts
+DaisyUI	UI components
+Better Auth	Authentication
+React Toastify	Toast notifications
+REST API	Product and category data
+Git & GitHub	Version control
 
-## Getting Started
 
-First, run the development server:
+🚀 Getting Started
+Follow these steps to run BazarDor locally.
+Prerequisites
+- Node.js
+- npm
+- Git
+Installation
+1. Clone the repository
+git clone YOUR_GITHUB_REPOSITORY_URL
+2. Navigate to the project folder
+cd e-commerce
+3. Install dependencies
+npm install
+4. Configure environment variables
 
-```bash
+Create a .env.local file in the project root and add the environment variables required by your API and authentication setup.
+# Add your required API and authentication environment variables here
+5. Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000 in your browser.
+🔌 API Integration
+BazarDor uses REST APIs to retrieve product and category information.
+Products API
+https://api.api-store.workers.dev/api/bazardor/products
+Categories API
+https://api.api-store.workers.dev/api/bazardor/categories
+Product data may include:
+- Product name in Bangla
+- Category and category icon
+- Product image or emoji
+- Current and previous prices
+- Price change direction and percentage
+- Market-wise minimum and maximum prices
+🔐 Authentication
+BazarDor provides authentication features for a personalized experience:
+- Create an account with email and password
+- Sign in to an existing account
+- Sign in using Google
+- Sign in using GitHub
+- View and update profile information
+- Sign out securely
+Authentication providers must be configured with the required environment variables and OAuth credentials.
+📱 Responsive Design
+The interface is designed to provide a smooth experience across:
+- Mobile devices
+- Tablets
+- Desktop computers
+⚠️ Disclaimer
+Product prices displayed on BazarDor are indicative and may vary depending on market conditions, location, and availability.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে। সকল দাম সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।
+👨‍💻 Developer
+MD. Rabbi Ghorami
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Aspiring Full-Stack Web Developer
+- GitHub: rabbi-cpu
+⭐ If you find this project useful, consider giving it a star on GitHub!

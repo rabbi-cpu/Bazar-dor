@@ -82,9 +82,7 @@ function SignInForm() {
           </p>
         </div>
 
-        {/* Email and Password Form */}
         <form onSubmit={handleSignIn} className="space-y-5">
-          {/* Email */}
           <div>
             <label
               htmlFor="email"
@@ -109,7 +107,6 @@ function SignInForm() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label
               htmlFor="password"
@@ -144,7 +141,6 @@ function SignInForm() {
             </p>
           )}
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading || !!socialLoading}
@@ -154,7 +150,6 @@ function SignInForm() {
           </button>
         </form>
 
-        {/* Divider */}
         <div className="my-6 flex items-center gap-3">
           <div className="h-px flex-1 bg-gray-200" />
 
@@ -165,9 +160,7 @@ function SignInForm() {
           <div className="h-px flex-1 bg-gray-200" />
         </div>
 
-        {/* Google & GitHub Sign In */}
         <div className="flex gap-3">
-          {/* Google */}
           <button
             type="button"
             disabled={loading || !!socialLoading}
@@ -178,8 +171,6 @@ function SignInForm() {
 
             {socialLoading === "google" ? "Connecting..." : "Google"}
           </button>
-
-          {/* GitHub */}
           <button
             type="button"
             disabled={loading || !!socialLoading}
@@ -191,8 +182,6 @@ function SignInForm() {
             {socialLoading === "github" ? "Connecting..." : "GitHub"}
           </button>
         </div>
-
-        {/* Signup Link */}
         <p className="mt-6 text-center text-sm text-gray-500">
           অ্যাকাউন্ট নেই?{" "}
           <Link
@@ -202,8 +191,6 @@ function SignInForm() {
             Sign Up
           </Link>
         </p>
-
-        {/* Footer */}
         <div className="mt-7 border-t border-gray-100 pt-5 text-center">
           <p className="text-xs text-gray-400">
             বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে।
@@ -213,7 +200,6 @@ function SignInForm() {
     </main>
   );
 }
-
 export default function SignInPage() {
   return (
     <Suspense

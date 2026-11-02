@@ -1,6 +1,13 @@
 
 import Link from "next/link";
 
+export interface MarketPrice {
+  market: string;
+  division: string;
+  min: number;
+  max: number;
+}
+
 export interface Product {
   id: number | string;
   nameBn: string;
@@ -12,20 +19,13 @@ export interface Product {
   today: number;
   lastWeek: number;
   lastMonth: number;
+
   change: {
     dir: "up" | "down" | "flat";
     pct: number;
   };
-}
-export interface MarketPrice {
-  market: string;
-  division: string;
-  min: number;
-  max: number;
-}
 
-interface ProductCardProps {
-  product: Product;
+  markets: MarketPrice[];
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {

@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 export interface MarketPrice {
@@ -26,6 +25,10 @@ export interface Product {
   };
 
   markets: MarketPrice[];
+}
+
+interface ProductCardProps {
+  product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
@@ -75,11 +78,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   : "bg-gray-100 text-gray-600"
             }`}
           >
-            {isUp
-              ? "▲"
-              : isDown
-                ? "▼"
-                : "—"}{" "}
+            {isUp ? "▲" : isDown ? "▼" : "—"}{" "}
             {product.change?.pct.toLocaleString("bn-BD")}%
           </span>
         </div>

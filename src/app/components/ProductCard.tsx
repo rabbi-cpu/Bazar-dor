@@ -17,6 +17,12 @@ export interface Product {
     pct: number;
   };
 }
+export interface MarketPrice {
+  market: string;
+  division: string;
+  min: number;
+  max: number;
+}
 
 interface ProductCardProps {
   product: Product;

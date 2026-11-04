@@ -2,17 +2,9 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
-function getEnv(name: string): string {
-  const value = process.env[name];
 
-  if (!value) {
-    throw new Error(`Missing environment variable: ${name}`);
-  }
 
-  return value;
-}
-
-const client = new MongoClient(getEnv("Mongo_DB"));
+const client = new MongoClient(process.env.MONGO_DB as string)
 
 const db = client.db("Bazardor");
 
@@ -27,13 +19,13 @@ export const auth = betterAuth({
 
   socialProviders: {
     google: {
-      clientId: getEnv("Google_Client_ID"),
-      clientSecret: getEnv("Google_Client_secret"),
+      clientId: process.env.Google_Client_ID as string,
+      clientSecret: process.env.Google_Client_secret as string
     },
 
     github: {
-      clientId: getEnv("Github_Client_ID"),
-      clientSecret: getEnv("Github_Client_secret"),
+      clientId: process.env.Github_Client_ID as string,
+      clientSecret: process.env.Github_Client_secret as string
     },
   },
 });

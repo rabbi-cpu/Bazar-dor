@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { redirect, notFound } from "next/navigation";
 
-import { auth } from "@/lib/Auth";
+import { auth } from "@/lib/auth";
 import ProductDetails from "@/app/components/ProductDetails";
 import type { Product } from "@/app/components/ProductCard";
 
